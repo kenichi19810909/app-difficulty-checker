@@ -1,4 +1,4 @@
-import express from "express";
+﻿import express from "express";
 import cors from "cors";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -15,7 +15,7 @@ app.post("/analyze", async (req, res) => {
 
     const genAI = new GoogleGenerativeAI(key);
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-flash",
       generationConfig: { responseMimeType: "application/json" }
     });
 
@@ -26,7 +26,7 @@ app.post("/analyze", async (req, res) => {
  learning:[{title,url}], tsv:string}.`;
     const user = `[REQUIREMENTS]\n${text}`;
 
-    const resp = await model.generateContent([{ role: "user", parts: [{ text: sys + "\n" + user }] }]);
+    const resp = await model.generateContent(sys + "\n" + user);
     res.json(JSON.parse(resp.response.text()));
   } catch (e:any) {
     res.status(500).json({ error: e.message ?? "internal" });
@@ -35,7 +35,6 @@ app.post("/analyze", async (req, res) => {
 
 app.listen(8080, () => console.log("API on :8080"));
 
-cd /d C:\dev\app-difficulty-checker\api
-mkdir src 2>NUL
-dir src
+
+
 
